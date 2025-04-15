@@ -1,36 +1,40 @@
 <template>
-  <div class="min-h-screen bg-cover bg-center flex items-center justify-center relative">
-  <img class="w-full h-full absolute top-0" src="/voiturelogin.jpg" alt="">
-
-    <div class="bg-[#2e2e2e] bg-opacity-90 rounded-xl p-10 w-full max-w-md shadow-xl z-10">
-      <h2 class="text-center text-white text-2xl font-semibold mb-6">Connexion</h2>
-      <form class="space-y-5">
+  <div class="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+    <img
+      src="/voiturelogin.jpg"
+      alt="Image de fond"
+      class="absolute inset-0 w-full h-full object-cover opacity-30 z-0"
+    />
+    <div class="relative z-10 bg-[#1f1f1f] bg-opacity-80 p-10 rounded-4xl w-full max-w-md">
+      <h1 class="text-3xl font-bold text-center text-white my-15">Connexion</h1>
+      <form class="space-y-6">
         <div>
-          <label class="block text-gray-300 mb-1">Adresse email</label>
+          <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Adresse e-mail</label>
           <input
+            id="email"
             type="email"
-            placeholder="Entrez votre adresse e-mail"
-            class="w-full px-4 py-2 rounded-md bg-transparent border border-gray-500 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold transition"
+            placeholder="exemple@mail.com"
+            class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#d4af7f]"
           />
         </div>
         <div>
-          <label class="block text-gray-300 mb-1">Mot de passe</label>
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Mot de passe</label>
           <input
+            id="password"
             type="password"
-            placeholder="Entrez votre mot de passe"
-            class="w-full px-4 py-2 rounded-md bg-transparent border border-gray-500 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gold transition"
+            placeholder="Votre mot de passe"
+            class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#d4af7f]"
           />
         </div>
-        <button
-          type="submit"
-          class="w-full bg-[#d4af7f] hover:bg-[#c29e6e] text-white font-semibold py-2 rounded-md transition"
-        >
-          Se connecter
-        </button>
+        <div>
+          <button
+            type="submit"
+            class="w-full py-2 bg-[#d4af7f] hover:bg-[#c49f70] text-white font-semibold rounded-lg transition duration-200"
+          >
+            Se connecter
+          </button>
+        </div>
       </form>
     </div>
   </div>
 </template>
-
-<script setup>
-</script>
