@@ -7,7 +7,7 @@
         <div class="relative max-w-3xl mx-auto mb-8">
           <input 
             type="text" 
-            class="w-full py-4 px-6 pr-16 rounded-full bg-neutral-900 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-gold-500" 
+            class="w-full py-4 px-6 pr-16 rounded-full bg-neutral-900 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF7F]" 
             placeholder="Rechercher un véhicule..." >
           <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-gold-600 hover:bg-gold-700 w-12 h-12 rounded-full flex items-center justify-center transition">
   <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2">
@@ -30,30 +30,30 @@
           <transition name="fade">
   <div v-if="showFilters" class="bg-neutral-900 rounded-xl p-6 mt-4 shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
     <div>
-      <h3 class="text-silver-500 text-lg font-semibold mb-3">Marque</h3>
+      <h3 class="text-[#d4af7f] text-lg font-semibold mb-3">Marque</h3>
       <div class="flex flex-wrap gap-2">
         <label v-for="brand in brands" :key="brand" class="flex items-center gap-2 bg-neutral-800 px-4 py-2 rounded-full cursor-pointer hover:bg-neutral-700 transition">
           <input type="checkbox" :value="brand" class="hidden" />
-          <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-silver-500"></span>
+          <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-[#d4af7f]"></span>
           {{ brand }}
         </label>
       </div>
     </div>
 
     <div>
-      <h3 class="text-silver-500 text-lg font-semibold mb-3">Prix</h3>
+      <h3 class="text-[#d4af7f] text-lg font-semibold mb-3">Prix</h3>
       <div class="flex flex-col gap-3">
-        <input type="range" min="0" max="500" step="10" v-model="priceRange" class="w-full h-2 rounded bg-neutral-800 appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white" />
-        <span class="text-center font-bold text-silver-500">{{ priceRange }}€/jour</span>
+        <input type="range" min="0" max="500" step="10" v-model="priceRange" class="w-full h-2 rounded bg-neutral-800 appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#d4af7f]" />
+        <span class="text-center font-bold text-[#d4af7f]">{{ priceRange }}€/jour</span>
       </div>
     </div>
 
     <div>
-      <h3 class="text-silver-500 text-lg font-semibold mb-3">Type</h3>
+      <h3 class="text-[#d4af7f] text-lg font-semibold mb-3">Type</h3>
       <div class="flex flex-wrap gap-2">
         <label v-for="type in vehicleTypes" :key="type" class="flex items-center gap-2 bg-neutral-800 px-4 py-2 rounded-full cursor-pointer hover:bg-neutral-700 transition">
           <input type="checkbox" :value="type" class="hidden" />
-          <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-silver-500"></span>
+          <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-[#d4af7f]"></span>
           {{ type }}
         </label>
       </div>
@@ -61,12 +61,13 @@
   </div>
 </transition>
 
+
         </div>
 
         <div class="flex justify-between items-center mb-6">
           <p class="text-sm text-neutral-400">{{ filteredVehicles.length }} résultats</p>
-          <select class="bg-neutral-900 text-white border-none px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-gold-500">
-           <option>Trier par: Pertinence</option>
+          <select class="bg-neutral-900 text-white border-none px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D4AF7F]">
+            <option>Trier par: Pertinence</option>
             <option>Prix croissant</option>
             <option>Prix décroissant</option>
             <option>Année récente</option>
@@ -98,10 +99,11 @@
               </div>
               
               <button 
-                class="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-white px-4 py-2 rounded-full text-sm font-bold hover:from-yellow-700 hover:to-yellow-600 transition-all shadow-md"
-                :disabled="!vehicle.disponibilite"
-                :class="{'opacity-50 cursor-not-allowed': !vehicle.disponibilite}"
-              >
+              class="w-full bg-gradient-to-r from-[#d4af7f] to-[#d4af7f] text-white px-4 py-2 rounded-full text-sm font-bold hover:from-[#d4af7f] hover:to-[#d4af7f] transition-all shadow-md"
+:disabled="!vehicle.disponibilite"
+:class="{'opacity-50 cursor-not-allowed': !vehicle.disponibilite}"
+>
+
                 Réserver
               </button>
             </div>
