@@ -11,8 +11,8 @@ app.use(express.json());
 
 // routes
 app.use('/api/utilisateurs', require('./routes/utilisateurs'));
-//app.use('/api/voitures', require('./routes/voitures'));
-//app.use('/api/locations', require('./routes/locations'));
+app.use('/api/voitures', require('./routes/voitures'));
+app.use('/api/locations', require('./routes/locations'));
 
 // main route
 app.get('/', (req, res) => {

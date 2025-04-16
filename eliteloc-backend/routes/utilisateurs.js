@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { createClient } = require('@supabase/supabase-js');
 
-// init de Supabase
+
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -31,7 +31,7 @@ router.post('/inscription', async (req, res) => {
     try {
         const { email, mot_de_passe, nom, prenom, telephone, adresse } = req.body;
 
-        // créer l'utilisateur dans le système d'authe de supabase
+        // créer l'utilisateur dans le système d'auth de supabase
         const { data: authData, error: authError } = await supabase.auth.signUp({
             email: email,
             password: mot_de_passe,
