@@ -1,12 +1,7 @@
 <template>
   <div class="text-white">
-    <img class="w-full" src="/bentley.png" alt="">
+    <img class="w-full opacity-65" src="/bentley.png" alt="">
     <main class="p-5">
-      <div class="flex justify-center mb-10 -mt-10">
-        <input type="text" placeholder="Rechercher..."
-             class="px-4 py-2 w-[300px] rounded-full border-none bg-neutral-900 text-white text-base placeholder-gray-500" />
-            </div>
-      
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         <div class="bg-neutral-900 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:translate-x-2 hover:shadow-xl" v-for="n in 6" :key="n">
           <img src="/peugeot.png" alt="Peugeot 208 GT LINE" class="w-full h-[150px] object-cover" />
@@ -18,5 +13,8 @@
         </div>
       </div>
     </main>
+    <aside>
+
+    </aside>
   </div>
 </template>
