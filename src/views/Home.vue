@@ -1,6 +1,6 @@
 <template>
   <div class="text-white">
-    <img class="w-full opacity-65" src="/bentley.png" alt="">
+    <img class="w-full opacity-85" src="/bentley.png" alt="">
     <main class="p-5">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         <div class="bg-neutral-900 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:translate-x-2 hover:shadow-xl" v-for="n in 6" :key="n">
