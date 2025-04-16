@@ -68,27 +68,7 @@
         </select>
       </div>
 
-<<<<<<< HEAD
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="vehicle in filteredVehicles" :key="vehicle.id" class="bg-zinc-900 rounded-xl overflow-hidden shadow-md hover:shadow-blue-500/20 hover:-translate-y-2 transition-transform relative">
-          <div v-if="vehicle.promotion" class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">Promo</div>
-          <img :src="vehicle.image" :alt="vehicle.model" class="w-full h-48 object-cover transition-transform duration-300 hover:scale-105" />
-          <div class="p-5">
-            <span class="text-white text-sm font-semibold block mb-1">{{ vehicle.brand }}</span>
-            <p class="text-lg font-bold text-white mb-2">{{ vehicle.model }} {{ vehicle.year }}</p>
-            <div class="flex justify-between text-sm text-zinc-400 mb-3">
-              <span class="flex items-center gap-1">⛽ {{ vehicle.fuel }}</span>
-              <span class="flex items-center gap-1">🔄 {{ vehicle.transmission }}</span>
-              <span class="flex items-center gap-1">👥 {{ vehicle.seats }} places</span>
-            </div>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-xl font-bold text-blue-500">{{ vehicle.price }}€<small class="text-sm font-normal">/jour</small></span>
-              <span v-if="vehicle.oldPrice" class="line-through text-zinc-500">{{ vehicle.oldPrice }}€</span>
-            </div>
-            <button class="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-full font-semibold text-white transition">Louer</button>
-          </div>
-        </div>
-=======
+
       <div class="cars-grid">
         <div class="car-card" v-for="vehicle in filteredVehicles" :key="vehicle.id_voiture">
   <img :src="vehicle.image" :alt="vehicle.modele" />
@@ -103,7 +83,6 @@
   </div>
 </div>
 
->>>>>>> 3097c3d (Implementation de la route voiture dans la vue vehicles.vue)
       </div>
     </main>
   </div>
@@ -116,28 +95,6 @@ import axios from 'axios'
 const vehicles = ref([])
 const filteredVehicles = ref([]) // pour conserver ta logique existante
 
-<<<<<<< HEAD
-const brands = ['Peugeot', 'Renault', 'BMW', 'Audi', 'Mercedes', 'Volkswagen'];
-const vehicleTypes = ['Berline', 'SUV', 'Citadine', 'Sportive', 'Break', 'Utilitaire'];
-
-const vehicles = [
-  { id: 1, brand: 'Peugeot', model: '208 GT LINE', year: '2020', price: 89, fuel: 'Essence', transmission: 'Automatique', seats: 5, image: '/peugeot.png' },
-  { id: 2, brand: 'BMW', model: 'Série 3', year: '2021', price: 129, fuel: 'Diesel', transmission: 'Automatique', seats: 5, image: '/bmw.png' },
-  { id: 3, brand: 'Audi', model: 'A4', year: '2022', price: 149, oldPrice: 169, promotion: true, fuel: 'Essence', transmission: 'Automatique', seats: 5, image: '/audi.png' },
-  { id: 4, brand: 'Renault', model: 'Clio', year: '2020', price: 69, fuel: 'Essence', transmission: 'Manuelle', seats: 5, image: '/renault.png' },
-  { id: 5, brand: 'Mercedes', model: 'Classe A', year: '2021', price: 139, fuel: 'Essence', transmission: 'Automatique', seats: 5, image: '/mercedes.png' },
-  { id: 6, brand: 'Volkswagen', model: 'Golf', year: '2022', price: 99, fuel: 'Hybride', transmission: 'Automatique', seats: 5, image: '/volkswagen.png' },
-];
-
-const filteredVehicles = computed(() => {
-  return vehicles.filter(vehicle => vehicle.price <= priceRange.value);
-});
-
-const toggleFilters = () => {
-  showFilters.value = !showFilters.value;
-};
-</script>
-=======
 // Récupération des voitures à l'initialisation
 onMounted(async () => {
   try {
@@ -567,4 +524,3 @@ onMounted(async () => {
   }
 }
 </style>
->>>>>>> 3097c3d (Implementation de la route voiture dans la vue vehicles.vue)
