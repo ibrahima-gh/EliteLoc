@@ -1,15 +1,30 @@
 <template>
-        <div class="relative text-white w-120 h-50 border-5 border-[#262629] rounded-[20px] overflow-hidden">
-            <img class=" object-cover" src="/bentley.png" alt="">
-            <div class="absolute bottom-0 bg-gradient-to-t from-black via-black to-transparent h-40 w-full"></div>
-            <div class="z-20 absolute bottom-0 flex w-full justify-between p-8">
-                <div class="space-y-2">
-                    <p class="text-xl">Bentley</p>
-                    <p class="opacity-50">Continental GT Mansory</p>
-                </div>
-                <button class="bg-[#C8AD7F] text-white p-4 rounded-full text-md">
-                    LOUER
-                </button>
-            </div>
+    <div class="relative text-white border-5 border-[#262629] rounded-[20px] overflow-hidden">
+        <img class="w-full h-full object-cover max-w-full max-h-full" :src="image" :alt="title">
+        <div class="absolute bottom-0 bg-gradient-to-t from-black via-black to-transparent h-40 w-full"></div>
+        <div class="z-20 absolute bottom-0 left-0 flex w-full flex-col p-8">
+                <p class="text-xl">{{ title }}</p>
+                <p class="opacity-50 mt-">{{ model }}</p>
         </div>
+        <button class="absolute bottom-0 right-0 px-4 py-2 m-8 bg-[#C8AD7F] text-white rounded-full text-md hover:opacity-90 cursor-pointer z-50">
+             louer
+        </button>
+    </div>
 </template>
+
+<script setup>
+defineProps({
+  image: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  model: {
+    type: String,
+    required: true
+  }
+});
+</script>
