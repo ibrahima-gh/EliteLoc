@@ -1,90 +1,176 @@
 <template>
-  <div class="min-h-screen bg-black text-white">
-    <main class="px-8 py-12 max-w-[1400px] mx-auto">
-      <div class="mb-8">
-        <div class="relative max-w-3xl mx-auto mb-6">
+  <div class="text-white">
+    <img class="w-full opacity-65" src="/bentley.png" alt="">
+    <main class="p-5 grid grid-cols-1 lg:grid-cols-5 gap-5">
+   
+      <section class="lg:col-span-5">
+        <div class="relative max-w-3xl mx-auto mb-8">
           <input 
             type="text" 
-            class="w-full py-4 px-6 pr-16 rounded-full bg-zinc-900 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-            placeholder="Rechercher un véhicule..." 
-          />
-          <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 w-12 h-12 rounded-full flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </button>
+            class="w-full py-4 px-6 pr-16 rounded-full bg-neutral-900 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-gold-500" 
+            placeholder="Rechercher un véhicule..." >
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-gold-600 hover:bg-gold-700 w-12 h-12 rounded-full flex items-center justify-center transition">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</button>
+
         </div>
 
-        <div class="text-center">
-          <button class="bg-zinc-900 hover:bg-zinc-800 px-6 py-3 rounded-full font-bold shadow-md flex items-center gap-2 mx-auto" @click="toggleFilters">
+        <div class="text-center mb-8">
+          <button class="bg-neutral-900 hover:bg-neutral-800 px-6 py-3 rounded-full font-bold shadow-md flex items-center gap-2 mx-auto transition" @click="toggleFilters">
             Filtres
-            <span :class="showFilters ? 'border-b-[6px] border-white' : 'border-t-[6px] border-white'" class="w-0 h-0 border-x-[6px] border-x-transparent transition-all"></span>
+            <span :class="showFilters ? 'rotate-180' : ''" class="transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
           </button>
+          <transition name="fade">
+  <div v-if="showFilters" class="bg-neutral-900 rounded-xl p-6 mt-4 shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+    <div>
+      <h3 class="text-silver-500 text-lg font-semibold mb-3">Marque</h3>
+      <div class="flex flex-wrap gap-2">
+        <label v-for="brand in brands" :key="brand" class="flex items-center gap-2 bg-neutral-800 px-4 py-2 rounded-full cursor-pointer hover:bg-neutral-700 transition">
+          <input type="checkbox" :value="brand" class="hidden" />
+          <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-silver-500"></span>
+          {{ brand }}
+        </label>
+      </div>
+    </div>
 
-          <transition name="fade-slide">
-            <div v-if="showFilters" class="bg-zinc-900 rounded-xl p-6 mt-4 shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div>
-                <h3 class="text-blue-500 text-lg font-semibold mb-3">Marque</h3>
-                <div class="flex flex-wrap gap-2">
-                  <label v-for="brand in brands" :key="brand" class="flex items-center gap-2 bg-zinc-800 px-4 py-2 rounded-full cursor-pointer hover:bg-zinc-700">
-                    <input type="checkbox" :value="brand" class="hidden" />
-                    <span class="w-4 h-4 border-2 border-zinc-600 rounded-sm bg-transparent"></span>
-                    {{ brand }}
-                  </label>
-                </div>
+    <div>
+      <h3 class="text-silver-500 text-lg font-semibold mb-3">Prix</h3>
+      <div class="flex flex-col gap-3">
+        <input type="range" min="0" max="500" step="10" v-model="priceRange" class="w-full h-2 rounded bg-neutral-800 appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white" />
+        <span class="text-center font-bold text-silver-500">{{ priceRange }}€/jour</span>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-silver-500 text-lg font-semibold mb-3">Type</h3>
+      <div class="flex flex-wrap gap-2">
+        <label v-for="type in vehicleTypes" :key="type" class="flex items-center gap-2 bg-neutral-800 px-4 py-2 rounded-full cursor-pointer hover:bg-neutral-700 transition">
+          <input type="checkbox" :value="type" class="hidden" />
+          <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-silver-500"></span>
+          {{ type }}
+        </label>
+      </div>
+    </div>
+  </div>
+</transition>
+
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
+          <p class="text-sm text-neutral-400">{{ filteredVehicles.length }} résultats</p>
+          <select class="bg-neutral-900 text-white border-none px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-gold-500">
+           <option>Trier par: Pertinence</option>
+            <option>Prix croissant</option>
+            <option>Prix décroissant</option>
+            <option>Année récente</option>
+          </select>
+        </div>
+      </section>
+
+      
+      <section class="lg:col-span-5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div 
+            class="bg-neutral-900 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:translate-y-2 hover:shadow-xl" 
+            v-for="vehicle in filteredVehicles" 
+            :key="vehicle.id_voiture"
+          >
+            <div class="relative">
+              <img :src="vehicle.image" :alt="vehicle.modele" class="w-full h-[180px] object-cover" />
+              <span v-if="!vehicle.disponibilite" class="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-1 rounded-full font-bold">
+                Indisponible
+              </span>
+            </div>
+            <div class="p-4">
+              <span class="text-sm font-bold text-white">{{ vehicle.marque }}</span>
+              <p class="text-sm text-neutral-400 my-2">{{ vehicle.modele }}</p>
+              
+              <div class="flex justify-between text-xs text-neutral-500 mb-4">
+                <span>{{ vehicle.type }}</span>
+                <span>{{ vehicle.immatriculation }}</span>
               </div>
+              
+              <button 
+                class="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-white px-4 py-2 rounded-full text-sm font-bold hover:from-yellow-700 hover:to-yellow-600 transition-all shadow-md"
+                :disabled="!vehicle.disponibilite"
+                :class="{'opacity-50 cursor-not-allowed': !vehicle.disponibilite}"
+              >
+                Réserver
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-              <div>
-                <h3 class="text-blue-500 text-lg font-semibold mb-3">Prix</h3>
-                <div class="flex flex-col gap-3">
-                  <input type="range" min="0" max="500" step="10" v-model="priceRange" class="w-full h-2 rounded bg-zinc-800 appearance-none" />
-                  <span class="text-center font-bold text-blue-500">{{ priceRange }}€/jour</span>
+ 
+    <footer class="bg-neutral-900 text-gray-300 pt-10 pb-5 px-5">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-white">Nos réseaux</h3>
+            <div class="flex flex-wrap gap-4">
+              <a v-for="social in socials" :key="social.name" :href="social.link" target="_blank" class="flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full border-2 border-gray-600 overflow-hidden p-1 group-hover:border-green-500 transition">
+                  <img :src="social.icon" :alt="social.name" class="w-full h-full object-cover rounded-full">
                 </div>
-              </div>
+                <span class="mt-2 text-sm group-hover:text-white transition">{{ social.name }}</span>
+              </a>
+            </div>
+          </div>
 
-              <div>
-                <h3 class="text-blue-500 text-lg font-semibold mb-3">Type</h3>
-                <div class="flex flex-wrap gap-2">
-                  <label v-for="type in vehicleTypes" :key="type" class="flex items-center gap-2 bg-zinc-800 px-4 py-2 rounded-full cursor-pointer hover:bg-zinc-700">
-                    <input type="checkbox" :value="type" class="hidden" />
-                    <span class="w-4 h-4 border-2 border-zinc-600 rounded-sm bg-transparent"></span>
-                    {{ type }}
-                  </label>
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-white">Contact</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 hover:text-white transition">
+                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center shrink-0">✉</div>
+                <a href="mailto:contact@eliteloc.com">contact@eliteloc.com</a>
+              </div>
+              <div class="flex items-center gap-3 hover:text-white transition">
+                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center shrink-0">📞</div>
+                <a href="tel:+33123456789">+33 1 23 45 67 89</a>
+              </div>
+              <div class="flex items-center gap-3 hover:text-white transition">
+                <div class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center shrink-0">🌐</div>
+                <a href="https://www.eliteloc.com" target="_blank">www.eliteloc.com</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold mb-4 text-white">Notre agence</h3>
+            <div class="relative h-48 rounded-lg overflow-hidden border border-gray-700">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9999999999995!2d2.2944813156746826!3d48.85884497928744!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d8778e6b1f%3A0x2d8e6b1f0e6b1f0e!2sTour%20Eiffel!5e0!3m2!1sen!2sfr!4v1616161616161!5m2!1sen!2sfr" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy">
+              </iframe>
+              <div class="absolute bottom-4 right-4">
+                <div class="relative">
+                  <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl p-1">
+                    <img src="/agency.jpg" alt="Agence EliteLoc" class="w-full h-full object-cover rounded-full border-2 border-green-500">
+                  </div>
+                  <div class="absolute -bottom-2 -right-2 bg-green-600 text-white text-xs px-2 py-1 rounded-full font-bold">OPEN</div>
                 </div>
               </div>
             </div>
-          </transition>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-5 border-t border-gray-800 text-center text-sm text-gray-500">
+          © 2025 EliteLoc. Tous droits réservés.
         </div>
       </div>
-
-      <div class="flex justify-between items-center mb-6">
-        <p class="text-sm text-zinc-400">{{ filteredVehicles.length }} résultats</p>
-        <select class="bg-zinc-900 text-white border-none px-4 py-2 rounded-full">
-          <option>Trier par: Pertinence</option>
-          <option>Prix croissant</option>
-          <option>Prix décroissant</option>
-          <option>Année récente</option>
-        </select>
-      </div>
-
-
-      <div class="cars-grid">
-        <div class="car-card" v-for="vehicle in filteredVehicles" :key="vehicle.id_voiture">
-  <img :src="vehicle.image" :alt="vehicle.modele" />
-  <div class="car-info">
-    <span class="brand">{{ vehicle.marque }}</span>
-    <p class="model">{{ vehicle.modele }}</p>
-    <div class="car-details">
-      <span class="detail">Type: {{ vehicle.type }}</span>
-      <span class="detail">Immatriculation: {{ vehicle.immatriculation }}</span>
-      <span class="detail">Disponible: {{ vehicle.disponibilite ? 'Oui' : 'Non' }}</span>
-    </div>
-  </div>
-</div>
-
-      </div>
-    </main>
+    </footer>
   </div>
 </template>
 
@@ -93,9 +179,24 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const vehicles = ref([])
-const filteredVehicles = ref([]) // pour conserver ta logique existante
+const filteredVehicles = ref([])
+const showFilters = ref(false)
+const priceRange = ref(200)
 
-// Récupération des voitures à l'initialisation
+const brands = ['Peugeot', 'BMW', 'Audi', 'Mercedes', 'Renault', 'Volkswagen']
+const vehicleTypes = ['Berline', 'SUV', 'Citadine', 'Sportive', 'Break']
+const socials = [
+  { name: 'Instagram', link: 'https://www.instagram.com', icon: '/insta.jpg' },
+  { name: 'Facebook', link: 'https://www.facebook.com', icon: '/facebook.png' },
+  { name: 'TikTok', link: 'https://www.tiktok.com', icon: '/tiktok.png' },
+  { name: 'Snapchat', link: 'https://www.Snapchat.com', icon: '/image.png' },
+]
+
+const toggleFilters = () => {
+  showFilters.value = !showFilters.value
+}
+
+
 onMounted(async () => {
   try {
     const response = await axios.get('http://localhost:3000/api/voitures')
@@ -107,420 +208,14 @@ onMounted(async () => {
 })
 </script>
 
-
 <style scoped>
-.vehicles-page {
-  min-height: 100vh;
-  background: #000;
-  color: #ffffff;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-.hero {
-  position: relative;
-  height: 30vh;
-  overflow: hidden;
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/image.png') no-repeat center center/cover;
-}
-
-.hero-content {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 2;
-}
-
-.nav {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-link {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1.1rem;
-  padding: 10px 20px;
-  border-radius: 20px; /* Forme arrondie */
-  background: #1e1e1e; /* Fond sombre */
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Ombre légère */
-}
-
-.nav-link:hover {
-  background: #444; /* Fond plus clair au survol */
-  transform: scale(1.1); /* Agrandissement au survol */
-  color: #ddd;
-}
-
-.nav-link.rounded {
-  border: 2px solid #444; /* Bordure sombre */
-}
-
-.nav-link.active {
-  background: #007bff;
-  color: white;
-}
-
-.main-content {
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.search-container {
-  margin-bottom: 2rem;
-}
-
-.search-bar-container {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto 1.5rem;
-}
-
-.search-bar {
-  display: block;
-  width: 100%;
-  padding: 15px 25px;
-  border-radius: 30px;
-  border: none;
-  background: #1e1e1e;
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  font-size: 1.1rem;
-  transition: all 0.3s ease;
-  padding-right: 60px;
-}
-
-.search-bar:focus {
-  outline: none;
-  box-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
-}
-
-.search-btn {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #007bff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.search-btn:hover {
-  background: #0056b3;
-  transform: translateY(-50%) scale(1.05);
-}
-
-.search-btn svg {
-  width: 20px;
-  height: 20px;
-  stroke: white;
-}
-
-.filter-toggle {
-  background: #1e1e1e;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.filter-toggle:hover {
-  background: #2e2e2e;
-  transform: translateY(-2px);
-}
-
-.arrow-down, .arrow-up {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.arrow-down {
-  border-top: 6px solid white;
-}
-
-.arrow-up {
-  border-bottom: 6px solid white;
-}
-
-.filters {
-  background: #1e1e1e;
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.fade-slide-enter-active, .fade-slide-leave-active {
-  transition: all 0.4s ease;
-}
-
-.fade-slide-enter-from, .fade-slide-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateY(-20px);
-}
-
-.filter-group {
-  margin-bottom: 15px;
-}
-
-.filter-title {
-  font-size: 1.1rem;
-  margin-bottom: 12px;
-  color: #007bff;
-}
-
-.filter-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.filter-option {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  padding: 8px 12px;
-  background: #2e2e2e;
-  border-radius: 20px;
-  transition: all 0.2s ease;
-}
-
-.filter-option:hover {
-  background: #3e3e3e;
-}
-
-.filter-option input {
-  display: none;
-}
-
-.checkmark {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #555;
-  border-radius: 3px;
-  margin-right: 8px;
-  position: relative;
-}
-
-.filter-option input:checked + .checkmark {
-  background: #007bff;
-  border-color: #007bff;
-}
-
-.price-range {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.slider {
-  width: 100%;
-  height: 8px;
-  border-radius: 5px;
-  background: #2e2e2e;
-  outline: none;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #007bff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.slider::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-}
-
-.price-value {
-  font-weight: bold;
-  text-align: center;
-  color: #007bff;
-}
-
-.results-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.results-count {
-  font-size: 0.9rem;
-  color: #aaa;
-}
-
-.sort-select {
-  background: #1e1e1e;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.cars-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
-}
-
-.car-card {
-  background: #1e1e1e;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.car-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
-}
-
-.car-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #ff4757;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  z-index: 1;
-}
-
-.car-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.car-card:hover img {
-  transform: scale(1.05);
-}
-
-.car-info {
-  padding: 20px;
-}
-
-.brand {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #ffffff;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.model {
-  font-size: 1.2rem;
-  color: #ffffff;
-  margin: 5px 0 10px;
-  font-weight: 600;
-}
-
-.car-details {
-  display: flex;
-  justify-content: space-between;
-  margin: 15px 0;
-  font-size: 0.8rem;
-  color: #aaa;
-}
-
-.detail {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.price-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 15px 0;
-}
-
-.price {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.price small {
-  font-size: 0.8rem;
-  color: #aaa;
-}
-
-.old-price {
-  font-size: 0.9rem;
-  color: #aaa;
-  text-decoration: line-through;
-}
-
-.rent-btn {
-  width: 100%;
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.rent-btn:hover {
-  background: #0056b3;
-  transform: translateY(-2px);
-}
-
-@media (max-width: 768px) {
-  .filters {
-    grid-template-columns: 1fr;
-  }
-  
-  .hero-content {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .nav {
-    width: 100%;
-    justify-content: center;
-  }
 }
 </style>
