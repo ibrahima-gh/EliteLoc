@@ -4,12 +4,20 @@
 </template>
 
 <script>
-import { RouterView } from 'vue-router';
-import Navbar from './components/Navbar.vue';
+  import { RouterView } from 'vue-router';
+  import Navbar from './components/Navbar.vue';
 
-export default {
+  export default {
   components: {
-    Navbar,
-  },
+  Navbar,
+},
+  data() {
+  return {
+  isAuthenticated: false,
+};
+},
+  created() {
+  this.isAuthenticated = !!localStorage.getItem('token');
+},
 };
 </script>

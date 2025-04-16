@@ -6,7 +6,6 @@
         <router-link to="/account/reservations" class="block hover:text-[#d4af7f]">Mes réservations</router-link>
         <router-link to="/account/profile" class="block hover:text-[#d4af7f]">Mon profil</router-link>
         <router-link to="/account/infos" class="block hover:text-[#d4af7f]">Mes données</router-link>
-        <button class="mt-6 w-full bg-red-700 hover:bg-red-600 py-2 rounded text-white">Se déconnecter</button>
       </aside>
   
       <!-- Contenu -->
