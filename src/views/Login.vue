@@ -35,6 +35,10 @@
           </button>
         </div>
       </form>
+      <p class="text-gray-400 text-sm text-center mt-6">
+        Pas encore de compte ?
+        <router-link to="/register" class="text-[#d4af7f] hover:underline ml-1">S’inscrire</router-link>
+      </p>
     </div>
   </div>
 </template>
