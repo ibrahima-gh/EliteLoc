@@ -1,7 +1,7 @@
 <template>
   <div class="absolute top-10 left-10 right-10 flex justify-between items-center z-20">
     <RouterLink to="/" class="text-5xl font-bold text-white">
-      <h1>Elite Loc</h1>
+      <img class="h-12" src="/logo.jpg" alt="">
     </RouterLink>
     <nav class="flex gap-6">
       <!-- liens accessibles à tous -->
