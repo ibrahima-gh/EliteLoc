@@ -24,6 +24,24 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/tendance", async (req, res) => {
+    try {
+        const { data, error } = await supabase
+          .from("voiture")
+          .select("*")
+          .in("id_voiture", [11, 12, 13, 14, 15, 16, 17, 18]);
+
+        if (error) {
+            console.error("Erreur lors de la récupération des voitures:", error);
+            return res.status(500).json({ message: "Erreur serveur" });
+        }
+
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Exception:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
 // m.a.j des disponibilité d'une voiture
 router.put("/:id", async (req, res) => {
     try {
