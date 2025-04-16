@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "node server.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
+<<<<<<< HEAD
     "lightningcss": "^1.21.0",
+=======
+    "axios": "^1.8.4",
+>>>>>>> 3097c3d (Implementation de la route voiture dans la vue vehicles.vue)
     "tailwindcss": "^4.1.4",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
