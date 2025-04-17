@@ -65,11 +65,9 @@ export default {
         console.error('Erreur lors de la récupération des données utilisateur:', error);
       }
     },
-
-    // modifier les données utilisateur
     async updateUserData() {
       try {
-        const response = await axiosInstance.put(`/utilisateurs/${this.user.id_utilisateur}`, {
+        const response = await axiosInstance.put(`/utilisateurs/email/${this.user.id_utilisateur}`, {
           nom: this.user.nom,
           prenom: this.user.prenom,
           email: this.user.email,

@@ -125,7 +125,7 @@ const handleRegister = async () => {
 
     if (response.status === 201) {
       alert('Inscription réussie. Veuillez vérifier votre email pour valider votre compte.');
-      router.push('/login'); // Rediriger l'utilisateur vers la page de connexion
+      router.push('/login');
     }
   } catch (error) {
     console.error('Erreur lors de l’inscription :', error);

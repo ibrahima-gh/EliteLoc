@@ -65,9 +65,8 @@ const handleLogin = async () => {
     });
 
     if (response.data.token) {
-      localStorage.setItem('token', response.data.token); // stocke le token JWT
-
-      //maj l'état global d'authentification
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('email', email.value);
       login();
 
       alert('Connexion réussie.');
@@ -78,4 +77,5 @@ const handleLogin = async () => {
     errorMessage.value = error.response?.data?.message || 'Email ou mot de passe incorrect.';
   }
 };
+
 </script>

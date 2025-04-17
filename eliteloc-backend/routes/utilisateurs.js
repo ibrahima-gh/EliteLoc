@@ -98,6 +98,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 // route l'utilisateur connecté
 router.get('/me', authenticateUser, async (req, res) => {
     try {
@@ -143,7 +144,13 @@ router.post('/inscription', async (req, res) => {
         const { data, error } = await supabase
             .from('utilisateur')
             .insert([
-                { nom, prenom, email, telephone, adresse }
+                {
+                  nom,
+                  prenom,
+                  email,
+                  telephone,
+                  adresse
+                }
             ]);
 
         if (error) {
