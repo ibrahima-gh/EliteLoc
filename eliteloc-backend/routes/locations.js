@@ -23,10 +23,28 @@ router.get("/", async (req, res) => {
     }
 });
 
-// créer une nouvelle location
-router.post("/", async (req, res) => {
+
+// récupère le middleware d'authentification depuis utilisateurs.js
+const { authenticateUser } = require('./utilisateurs'); // exporte ce middleware dans utilisateurs.js
+
+router.post("/", authenticateUser, async (req, res) => {
     try {
-        const { date_debut, date_fin, id_utilisateur, id_voiture } = req.body;
+        const { date_debut, date_fin, id_voiture } = req.body;
+        const userId = req.user.user.id;
+
+        //  l'utilisateur à partir de l'UUID
+        const { data: userData, error: userError } = await supabase
+            .from('utilisateur')
+            .select('id_utilisateur')
+            .eq('uuid', userId)
+            .single();
+
+        if (userError || !userData) {
+            console.error("Erreur lors de la récupération de l'utilisateur:", userError);
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        const id_utilisateur = userData.id_utilisateur;
 
         // vérification si la voiture est disponible
         const { data: voiture, error: voitureError } = await supabase
@@ -50,6 +68,7 @@ router.post("/", async (req, res) => {
                 date_fin,
                 id_utilisateur,
                 id_voiture,
+                statut: "en attente"
             },
         ]);
 
@@ -118,6 +137,56 @@ router.get("/utilisateur/:id", async (req, res) => {
         }));
 
         res.status(200).json(formatted);
+    } catch (error) {
+        console.error("Exception:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
+
+// les locations de l'utilisateur connecté
+router.get("/mes-locations", authenticateUser, async (req, res) => {
+    try {
+        const userId = req.user.user.id;
+
+        //  l'utilisateur à partir de l'UUID
+        const { data: userData, error: userError } = await supabase
+            .from('utilisateur')
+            .select('id_utilisateur')
+            .eq('uuid', userId)
+            .single();
+
+        if (userError || !userData) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
+        const id_utilisateur = userData.id_utilisateur;
+
+        // pour récupérer les locations avec les infos de voiture
+        const { data, error } = await supabase
+            .from("location")
+            .select(`
+        *,
+        voiture:id_voiture (
+          marque, 
+          modele,
+          image
+        )
+      `)
+            .eq("id_utilisateur", id_utilisateur);
+
+        if (error) {
+            console.error("Erreur lors de la récupération des locations:", error);
+            return res.status(500).json({ message: "Erreur serveur" });
+        }
+
+        const formattedData = data.map(location => ({
+            ...location,
+            voiture_marque: location.voiture.marque,
+            voiture_modele: location.voiture.modele,
+            voiture_image: location.voiture.image
+        }));
+
+        res.status(200).json(formattedData);
     } catch (error) {
         console.error("Exception:", error);
         res.status(500).json({ message: "Erreur serveur" });
