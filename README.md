@@ -53,8 +53,14 @@ cd ..
 ```
 
 4. Configuration des variables d'environnement :
-   - Créez un fichier `.env` dans le dossier `eliteloc-backend` basé sur l'exemple fourni
-   - Configurez vos identifiants Supabase et autres variables nécessaires
+   Créez un fichier `.env` dans le dossier `eliteloc-backend` avec les variables suivantes :
+```ini
+SUPABASE_URL=https://qxxmpgjuarrngnrawrko.supabase.co/
+SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF4eG1wZ2p1YXJybmducmF3cmtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2MzM5NzgsImV4cCI6MjA2MDIwOTk3OH0.OSQtJtCSF7UuX2dZg4fqwNoErviKz0IWkBMKTnBY5GI
+PORT=3000
+```
+
+> **Note importante** : Les clés Supabase fournies ci-dessus sont liées à un projet de démonstration et sont partagées uniquement pour faciliter l'installation et les tests. Dans un contexte de production, nous n'aurions pas partager nos clés Supabase publiquement.
 
 ### Démarrer l'application
 
