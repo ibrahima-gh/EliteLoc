@@ -99,3 +99,8 @@ L'application est divisée en deux parties principales :
 - Confirmation d'email obligatoire
 - Hachage sécurisé des mots de passe
 - Protection des routes sensibles
+
+## Note sur le processus d'inscription
+
+> **Important** : Lors de l'inscription, il est possible que vous receviez un message d'erreur dans l'interface. Cependant, votre compte sera bien créé dans la base de données. Veuillez vérifier votre boîte de réception (ou dossier spam) pour le mail de confirmation envoyé par Supabase. Vous devez cliquer sur le lien de confirmation pour activer votre compte et pouvoir vous connecter à l'application.
+>
