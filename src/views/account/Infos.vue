@@ -52,11 +52,15 @@ export default {
   methods: {
     async fetchUserData() {
       try {
-        const email = localStorage.getItem('email');
-        if (!email) throw new Error('Aucun email trouvé dans le localStorage');
+        const token = localStorage.getItem('token'); // récupére le token depuis le stockage local
 
-        const response = await axiosInstance.get(`/utilisateurs/email/${email}`);
-        this.user = response.data;
+        const response = await axiosInstance.get('/utilisateurs/me', {
+          headers: {
+            Authorization: `Bearer ${token}` // ajoute le token dans les en-têtes
+          }
+        });
+
+        this.user = response.data; // récupére les données de l'utilisateur connecté
       } catch (error) {
         console.error('Erreur lors de la récupération des données utilisateur:', error);
       }

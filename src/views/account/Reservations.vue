@@ -3,7 +3,7 @@
     <h1 class="text-2xl font-bold text-[#d4af7f] mb-4">Mes réservations</h1>
     <p class="text-gray-400 mb-6">Toute mes reservations :</p>
 
-    <div class="grid md:grid-cols-3 gap-6">
+    <div class="grid gap-6">
       <div v-for="location in locations" :key="location.id_location" class="bg-[#1f1f1f] p-5 rounded-xl max-w-md">
         <div class="max-w-xl ">
         <Vehicles
@@ -39,14 +39,15 @@ return `${day}:${month}:${year}`;
 }
 
 onMounted(async () => {
-const email = localStorage.getItem('email')
-if (!email) return
+const token = localStorage.getItem('token')
+if (!token) return
 
 try {
-  const userRes = await axios.get(`http://localhost:3000/api/utilisateurs/email/${email}`)
-  const id_utilisateur = userRes.data.id_utilisateur
-
-  const res = await axios.get(`http://localhost:3000/api/locations/utilisateur/${id_utilisateur}`)
+  const res = await axios.get(`http://localhost:3000/api/locations/mes-locations`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
   locations.value = res.data
 } catch (error) {
   console.error("Erreur lors de la récupération des réservations :", error)

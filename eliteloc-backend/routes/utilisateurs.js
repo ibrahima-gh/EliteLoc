@@ -8,24 +8,27 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 
-// Middleware pour vérifier le token JWT
+// middleware pour vérifier le token JWT
 const authenticateUser = async (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1]; // Extraire le token des en-têtes
+    const token = req.headers.authorization?.split(' ')[1]; // extraire le token de l'en-tête Authorization
 
     if (!token) {
         return res.status(401).json({ message: 'Token manquant. Vous devez être connecté.' });
     }
 
     try {
-        // Vérifier et décoder le token JWT avec Supabase
-        const { data: user, error } = await supabase.auth.getUser(token);
+        // décode le token JWT avec Supabase
+        const { data, error } = await supabase.auth.getUser(token);
 
-        if (error || !user) {
+        if (error || !data.user) {
+            console.log("Erreur d'authentification:", error);
             return res.status(401).json({ message: 'Token invalide.' });
         }
 
-        // Ajouter l'utilisateur au contexte de la requête
-        req.user = user;
+        console.log("Utilisateur authentifié :", data.user);
+
+        // ajoute l'utilisateur au contexte de la requête
+        req.user = { user: data.user };
         next();
     } catch (error) {
         console.error("Erreur lors de l'authentification:", error);
@@ -95,44 +98,26 @@ router.get('/', async (req, res) => {
     }
 });
 
-// récupérer un utilisateur par email
-router.get('/email/:email', async (req, res) => {
-    try {
-        const { email } = req.params;
-
-        const { data, error } = await supabase
-            .from('utilisateur')
-            .select('*')
-            .eq('email', email)
-            .single();
-
-        if (error || !data) {
-            return res.status(404).json({ message: "Utilisateur non trouvé." });
-        }
-
-        res.status(200).json(data);
-    } catch (error) {
-        console.error("Erreur lors de la récupération des informations utilisateur par email:", error);
-        res.status(500).json({ message: 'Erreur serveur.' });
-    }
-});
 
 // route l'utilisateur connecté
 router.get('/me', authenticateUser, async (req, res) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user.user.id;
 
+        console.log("UUID à rechercher :", userId);
+
+        // requête dans la bdd
         const { data, error } = await supabase
             .from('utilisateur')
             .select('*')
-            .eq('id_utilisateur', userId)
+            .eq('uuid', userId) //
             .single();
 
         if (error || !data) {
             return res.status(404).json({ message: "Utilisateur non trouvé." });
         }
 
-        res.status(200).json(data);
+        res.status(200).json(data); // retourne les données de l'utilisateur
     } catch (error) {
         console.error("Erreur lors de la récupération des informations utilisateur:", error);
         res.status(500).json({ message: 'Erreur serveur.' });
@@ -209,27 +194,6 @@ router.put('/:id', authenticateUser, async (req, res) => {
     }
 });
 
-// modifier les données utilisateur à partir de l'email
-router.put('/email/:id', async (req, res) => {
-    const { email } = req.params;
-    const { nom, prenom, telephone, adresse } = req.body;
-
-    try {
-        const { error } = await supabase
-            .from('utilisateur')
-            .update({ nom, prenom, telephone, adresse })
-            .eq('email', email);
-
-        if (error) {
-            console.error('Erreur pendant la mise à jour :', error);
-            return res.status(500).json({ message: 'Erreur interne du serveur.' });
-        }
-
-        res.status(200).json({ message: 'Utilisateur mis à jour avec succès.' });
-    } catch (error) {
-        console.error("Exception pendant la mise à jour :", error);
-        res.status(500).json({ message: 'Erreur serveur.' });
-    }
-});
-
 module.exports = router;
+
+module.exports.authenticateUser = authenticateUser;

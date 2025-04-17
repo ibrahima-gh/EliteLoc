@@ -54,8 +54,8 @@ const closePopup = () => {
   showPopup.value = false;
 };
 const createLocation = async () => {
-  const email = localStorage.getItem('email');
-  if (!email) {
+  const token = localStorage.getItem('token');
+  if (!token) {
     alert('Vous devez être connecté pour réserver.');
     window.location.href = '/register';
     return;
@@ -71,18 +71,15 @@ const createLocation = async () => {
   }
 
   try {
-    const utilisateurResponse = await fetch(`http://localhost:3000/api/utilisateurs/email/${email}`);
-    const utilisateurData = await utilisateurResponse.json();
-    const id_utilisateur = utilisateurData.id_utilisateur;
-
-
     const response = await fetch('http://localhost:3000/api/locations', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Ajout du token JWT
+      },
       body: JSON.stringify({
         date_debut: startDate.value,
         date_fin: endDate.value,
-        id_utilisateur,
         id_voiture
       })
     });
@@ -100,7 +97,8 @@ const createLocation = async () => {
     console.error("Erreur pendant la réservation :", error);
     alert("Erreur lors de la création de la location.");
   }
-};
+}
+
 const { image, title, model, primaryColor, id: id_voiture } = defineProps({
   image: { type: String, required: true },
   title: { type: String, required: true },
