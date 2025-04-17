@@ -22,7 +22,7 @@ const routes = [
     path: '/account',
     component: AccountLayout,
     children: [
-      { path: '', redirect: '/account/reservations' },
+      { path: '', redirect: '/account/profile' },
       { path: 'reservations', component: Reservations },
       { path: 'profile', component: Profile },
       { path: 'infos', component: Infos },

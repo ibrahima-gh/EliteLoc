@@ -8,7 +8,7 @@ const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 
-// Middleware pour vérifier le token JWT
+// middleware pour vérifier le token JWT
 const authenticateUser = async (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1]; // Extraire le token des en-têtes
 

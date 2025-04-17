@@ -71,7 +71,7 @@ const handleLogin = async () => {
       login();
 
       alert('Connexion réussie.');
-      router.push('/account/reservations'); // redirrige vers la page utilisateur
+      router.push('/account/profile');
     }
   } catch (error) {
     console.error('Erreur lors de la connexion :', error);
