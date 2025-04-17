@@ -129,7 +129,7 @@ const handleRegister = async () => {
     }
   } catch (error) {
     console.error('Erreur lors de l’inscription :', error);
-    errorMessage.value = error.response?.data?.message || "Erreur lors de l'inscription.";
+    errorMessage.value = error.response?.data?.message || "Veuillez verifier votre mail.";
   }
 };
 </script>
