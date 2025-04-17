@@ -1,16 +1,14 @@
 import { ref } from 'vue';
-
-// état d'authentification global
 const isAuthenticated = ref(!!localStorage.getItem('token'));
 
-// fonctions pour modifier l'état global
 const login = () => {
-    isAuthenticated.value = true; // modifie l'état après connexion
+    isAuthenticated.value = true;
 };
 
 const logout = () => {
-    isAuthenticated.value = false; // modifie l'état après déconnexion
-    localStorage.removeItem('token'); // supprime le token
+    isAuthenticated.value = false;
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
 };
 
 export { isAuthenticated, login, logout };

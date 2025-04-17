@@ -52,24 +52,18 @@ export default {
   methods: {
     async fetchUserData() {
       try {
-        const token = localStorage.getItem('token'); // Récupérer le token depuis le stockage local
+        const email = localStorage.getItem('email');
+        if (!email) throw new Error('Aucun email trouvé dans le localStorage');
 
-        const response = await axiosInstance.get('/utilisateurs/me', {
-          headers: {
-            Authorization: `Bearer ${token}` // Ajouter le token dans les en-têtes
-          }
-        });
-
-        this.user = response.data; // Récupérer les données de l'utilisateur connecté
+        const response = await axiosInstance.get(`/utilisateurs/email/${email}`);
+        this.user = response.data;
       } catch (error) {
         console.error('Erreur lors de la récupération des données utilisateur:', error);
       }
     },
-
-    // modifier les données utilisateur
     async updateUserData() {
       try {
-        const response = await axiosInstance.put(`/utilisateurs/${this.user.id_utilisateur}`, {
+        const response = await axiosInstance.put(`/utilisateurs/email/${this.user.id_utilisateur}`, {
           nom: this.user.nom,
           prenom: this.user.prenom,
           email: this.user.email,

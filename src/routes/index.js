@@ -5,8 +5,8 @@ import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Vehicles from '../views/Vehicles.vue';
 import EmailConfirmation from '@/views/EmailConfirmation.vue';
+import Admin from '../views/Admin.vue';
 
-// vues liées au compte
 import AccountLayout from '../views/account/AccountLayout.vue'
 import Reservations from '../views/account/Reservations.vue'
 import Profile from '../views/account/Profile.vue'
@@ -18,6 +18,7 @@ const routes = [
   { path: '/register', component: Register },
   { path: '/vehicles', component: Vehicles },
   { path: '/email-confirmation', component: EmailConfirmation },
+  { path: '/admin', component: Admin },
   {
     path: '/account',
     component: AccountLayout,
@@ -27,7 +28,6 @@ const routes = [
       { path: 'profile', component: Profile },
       { path: 'infos', component: Infos },
     ],
-    // Ajouter un meta marqueur pour protéger la route
     meta: { requiresAuth: true },
   },
 ]
@@ -37,16 +37,13 @@ const router = createRouter({
   routes,
 });
 
-// Guard global pour détecter les routes protégées
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token'); // Vérifier si un token existe
-
-  // Bloquer les routes protégées (requiresAuth) si l'utilisateur n'est pas connecté
+  const isAuthenticated = !!localStorage.getItem('token');
   if (to.meta.requiresAuth && !isAuthenticated) {
     alert('Accès interdit. Veuillez vous connecter.');
-    next('/login'); // Rediriger vers la page de connexion
+    next('/login');
   } else {
-    next(); // Continuer la navigation
+    next();
   }
 });
 

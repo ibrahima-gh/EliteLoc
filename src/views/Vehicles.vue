@@ -82,7 +82,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
           <vehicles
             v-for="vehicle in filteredVehicles" 
-            :key="vehicle.id_voiture" 
+            :id="vehicle.id_voiture" 
             :image="vehicle.image" 
             :title="vehicle.marque" 
             :model="vehicle.modele"

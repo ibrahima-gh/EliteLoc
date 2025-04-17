@@ -95,6 +95,28 @@ router.get('/', async (req, res) => {
     }
 });
 
+// récupérer un utilisateur par email
+router.get('/email/:email', async (req, res) => {
+    try {
+        const { email } = req.params;
+
+        const { data, error } = await supabase
+            .from('utilisateur')
+            .select('*')
+            .eq('email', email)
+            .single();
+
+        if (error || !data) {
+            return res.status(404).json({ message: "Utilisateur non trouvé." });
+        }
+
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des informations utilisateur par email:", error);
+        res.status(500).json({ message: 'Erreur serveur.' });
+    }
+});
+
 // route l'utilisateur connecté
 router.get('/me', authenticateUser, async (req, res) => {
     try {
@@ -137,7 +159,13 @@ router.post('/inscription', async (req, res) => {
         const { data, error } = await supabase
             .from('utilisateur')
             .insert([
-                { nom, prenom, email, telephone, adresse }
+                {
+                  nom,
+                  prenom,
+                  email,
+                  telephone,
+                  adresse
+                }
             ]);
 
         if (error) {
@@ -168,6 +196,29 @@ router.put('/:id', authenticateUser, async (req, res) => {
             .from('utilisateur')
             .update({ nom, prenom, email, telephone, adresse })
             .eq('id_utilisateur', id);
+
+        if (error) {
+            console.error('Erreur pendant la mise à jour :', error);
+            return res.status(500).json({ message: 'Erreur interne du serveur.' });
+        }
+
+        res.status(200).json({ message: 'Utilisateur mis à jour avec succès.' });
+    } catch (error) {
+        console.error("Exception pendant la mise à jour :", error);
+        res.status(500).json({ message: 'Erreur serveur.' });
+    }
+});
+
+// modifier les données utilisateur à partir de l'email
+router.put('/email/:id', async (req, res) => {
+    const { email } = req.params;
+    const { nom, prenom, telephone, adresse } = req.body;
+
+    try {
+        const { error } = await supabase
+            .from('utilisateur')
+            .update({ nom, prenom, telephone, adresse })
+            .eq('email', email);
 
         if (error) {
             console.error('Erreur pendant la mise à jour :', error);

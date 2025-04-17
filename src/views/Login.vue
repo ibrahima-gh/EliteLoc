@@ -65,17 +65,17 @@ const handleLogin = async () => {
     });
 
     if (response.data.token) {
-      localStorage.setItem('token', response.data.token); // stocke le token JWT
-
-      //maj l'état global d'authentification
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('email', email.value);
       login();
 
       alert('Connexion réussie.');
-      router.push('/account/reservations'); // redirrige vers la page utilisateur
+      router.push('/account/reservations');
     }
   } catch (error) {
     console.error('Erreur lors de la connexion :', error);
     errorMessage.value = error.response?.data?.message || 'Email ou mot de passe incorrect.';
   }
 };
+
 </script>

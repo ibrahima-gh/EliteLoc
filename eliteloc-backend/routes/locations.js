@@ -94,4 +94,34 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+// récupérer toutes les locations d'un utilisateur donné
+router.get("/utilisateur/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const { data, error } = await supabase
+            .from("location")
+            .select("*, voiture(*)")
+            .eq("id_utilisateur", id);
+
+        if (error) {
+            console.error("Erreur lors de la récupération des locations utilisateur:", error);
+            return res.status(500).json({ message: "Erreur serveur" });
+        }
+
+        // Mapper les données pour enrichir les infos du véhicule
+        const formatted = data.map(loc => ({
+            ...loc,
+            voiture_image: loc.voiture?.image || '',
+            voiture_modele: loc.voiture?.modele || '',
+            voiture_marque: loc.voiture?.marque || ''
+        }));
+
+        res.status(200).json(formatted);
+    } catch (error) {
+        console.error("Exception:", error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
+
 module.exports = router;
