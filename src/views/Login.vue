@@ -31,7 +31,7 @@
         <div>
           <button
               type="submit"
-              class="w-full py-2 bg-[#d4af7f] hover:bg-[#c49f70] text-white font-semibold rounded-lg transition"
+              class="w-full py-2 bg-[#d4af7f] hover:bg-[#c49f70] text-white font-semibold rounded-lg transition cursor-pointer"
           >
             Se connecter
           </button>
@@ -50,7 +50,7 @@
 import axiosInstance from '@/utils/axiosInstance';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { login } from '@/store/auth'; // Importer la fonction login pour mettre à jour l'état global
+import { login } from '@/store/auth'; 
 
 const router = useRouter();
 const email = ref('');
@@ -59,14 +59,14 @@ const errorMessage = ref('');
 
 const handleLogin = async () => {
   try {
-    const response = await axiosInstance.post('/utilisateurs/connexion', {
+    const response = await axiosInstance.post('/login', {
       email: email.value,
-      mot_de_passe: password.value,
+      password: password.value,
     });
 
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('email', email.value);
+    if (response.data.user) {
+      localStorage.setItem('user_id', response.data.user.id);
+      localStorage.setItem('user_email', response.data.user.email);
       login();
 
       alert('Connexion réussie.');

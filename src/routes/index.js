@@ -4,7 +4,6 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import Vehicles from '../views/Vehicles.vue';
-import EmailConfirmation from '@/views/EmailConfirmation.vue';
 import Admin from '../views/Admin.vue';
 
 import AccountLayout from '../views/account/AccountLayout.vue'
@@ -17,7 +16,6 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/vehicles', component: Vehicles },
-  { path: '/email-confirmation', component: EmailConfirmation },
   { path: '/admin', component: Admin },
   {
     path: '/account',
@@ -38,7 +36,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('token');
+const isAuthenticated = !!localStorage.getItem('user_id');
   if (to.meta.requiresAuth && !isAuthenticated) {
     alert('Accès interdit. Veuillez vous connecter.');
     next('/login');

@@ -83,7 +83,7 @@
           <vehicles
             v-for="vehicle in filteredVehicles" 
             :id="vehicle.id_voiture" 
-            :image="vehicle.image" 
+            :image="vehicle.url_img" 
             :title="vehicle.marque" 
             :model="vehicle.modele"
             :primaryColor="vehicle.disponibilite ? undefined : '#7B1E22'"
@@ -115,7 +115,7 @@ const toggleFilters = () => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/voitures')
+    const response = await axios.get('http://localhost:3000/cars')
     vehicles.value = response.data
     filteredVehicles.value = response.data
   } catch (error) {

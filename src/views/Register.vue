@@ -9,7 +9,6 @@
       <h2 class="text-3xl font-bold text-center text-white my-15">Inscription</h2>
 
       <form @submit.prevent="handleRegister" class="space-y-6">
-        <!-- Prénom -->
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-1">Prénom</label>
           <input
@@ -20,7 +19,6 @@
           />
         </div>
 
-        <!-- Nom -->
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-1">Nom</label>
           <input
@@ -31,7 +29,6 @@
           />
         </div>
 
-        <!-- Email -->
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-1">Adresse email</label>
           <input
@@ -42,7 +39,6 @@
           />
         </div>
 
-        <!-- Mot de passe -->
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-1">Mot de passe</label>
           <input
@@ -53,7 +49,6 @@
           />
         </div>
 
-        <!-- Téléphone -->
         <div>
           <label class="block text-sm font-medium text-gray-300 mb-1">Téléphone</label>
           <input
@@ -63,19 +58,6 @@
               class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-transparent text-white"
           />
         </div>
-
-        <!-- Adresse -->
-        <div>
-          <label class="block text-sm font-medium text-gray-300 mb-1">Adresse</label>
-          <input
-              type="text"
-              v-model="adresse"
-              placeholder="Entrez votre adresse"
-              class="w-full px-4 py-2 rounded-lg border border-gray-600 bg-transparent text-white"
-          />
-        </div>
-
-        <!-- Bouton de soumission -->
         <div>
           <button
               type="submit"
@@ -86,10 +68,8 @@
         </div>
       </form>
 
-      <!-- Message d'erreur -->
       <p v-if="errorMessage" class="text-red-400 text-center mt-4">{{ errorMessage }}</p>
 
-      <!-- Redirection vers login -->
       <p class="text-gray-400 text-sm text-center mt-6">
         Déjà un compte ?
         <router-link to="/login" class="text-[#d4af7f] hover:underline ml-1">Se connecter</router-link>
@@ -109,18 +89,15 @@ const email = ref('');
 const prenom = ref('');
 const password = ref('');
 const telephone = ref('');
-const adresse = ref('');
-const errorMessage = ref('');
 
 const handleRegister = async () => {
   try {
-    const response = await axiosInstance.post('/utilisateurs/inscription', {
+    const response = await axiosInstance.post('/register', {
       nom: nom.value,
       prenom: prenom.value,
       email: email.value,
       mot_de_passe: password.value,
       telephone: telephone.value,
-      adresse: adresse.value,
     });
 
     if (response.status === 201) {
@@ -129,7 +106,6 @@ const handleRegister = async () => {
     }
   } catch (error) {
     console.error('Erreur lors de l’inscription :', error);
-    errorMessage.value = error.response?.data?.message || "Veuillez verifier votre mail.";
   }
 };
 </script>

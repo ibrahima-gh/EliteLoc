@@ -1,18 +1,17 @@
 import { ref } from 'vue';
 import axiosInstance from '@/utils/axiosInstance';
 
-const isAuthenticated = ref(!!localStorage.getItem('token'));
+const isAuthenticated = ref(!!localStorage.getItem('user_id'));
 
 const login = async (credentials) => {
     try {
-        const response = await axiosInstance.post('/utilisateurs/connexion', credentials);
-        const token = response.data.token;
+        const response = await axiosInstance.post('/login', credentials);
+        const userId = response.data.user.id;
 
-        // stocke le token dans le localStorage et mets à jour l'état
-        localStorage.setItem('token', token);
+        localStorage.setItem('user_id', userId);
         isAuthenticated.value = true;
 
-        return response.data.user; // retourner l'utilisateur connecté
+        return response.data.user;
     } catch (err) {
         console.error("Erreur de connexion :", err);
         throw err;
@@ -20,8 +19,8 @@ const login = async (credentials) => {
 };
 
 const logout = () => {
-    isAuthenticated.value = false; // mets à jour l'état
-    localStorage.removeItem('token'); // supp le token
+    isAuthenticated.value = false;
+    localStorage.removeItem('user_id');
 };
 
 export { isAuthenticated, login, logout };

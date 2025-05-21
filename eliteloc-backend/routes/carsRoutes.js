@@ -1,17 +1,11 @@
+import express from 'express';
+import { supabase } from '../clients/supabase.js';
 
-const express = require("express");
 const router = express.Router();
-const { createClient } = require("@supabase/supabase-js");
-
-
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 // get de toutes les voitures
-router.get("/", async (req, res) => {
+router.get("/cars", async (req, res) => {
     try {
-        const { data, error } = await supabase.from("voiture").select("*");
+        const { data, error } = await supabase.from("cars").select("*");
 
         if (error) {
             console.error("Erreur lors de la récupération des voitures:", error);
@@ -25,10 +19,10 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/tendance", async (req, res) => {
+router.get("/cars/tendance", async (req, res) => {
     try {
         const { data, error } = await supabase
-          .from("voiture")
+          .from("cars")
           .select("*")
           .in("id_voiture", [11, 12, 13, 14, 15, 16, 17, 18]);
 
@@ -44,13 +38,13 @@ router.get("/tendance", async (req, res) => {
     }
 });
 // m.a.j des disponibilité d'une voiture
-router.put("/:id", async (req, res) => {
+router.put("/cars:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { disponibilite } = req.body;
 
         const { data, error } = await supabase
-            .from("voiture")
+            .from("cars")
             .update({ disponibilite })
             .eq("id_voiture", id);
 
@@ -66,4 +60,4 @@ router.put("/:id", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

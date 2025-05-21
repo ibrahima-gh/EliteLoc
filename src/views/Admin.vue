@@ -61,13 +61,13 @@ const utilisateurs = ref([])
 const locations = ref([])
 
 onMounted(async () => {
-    const voituresRes = await axios.get('http://localhost:3000/api/voitures')
+    const voituresRes = await axios.get('http://localhost:3000/cars')
     voitures.value = voituresRes.data
 
-    const utilisateursRes = await axios.get('http://localhost:3000/api/utilisateurs')
+    const utilisateursRes = await axios.get('http://localhost:3000/users')
     utilisateurs.value = utilisateursRes.data
 
-    const locationsRes = await axios.get('http://localhost:3000/api/locations')
+    const locationsRes = await axios.get('http://localhost:3000/rents')
     locations.value = locationsRes.data
 })
 
@@ -76,7 +76,7 @@ const modifierVoiture = (voiture) => {
 }
 
 const supprimerVoiture = async (id) => {
-    await axios.delete(`http://localhost:3000/api/voitures/${id}`)
+    await axios.delete(`http://localhost:3000/cars/${id}`)
     voitures.value = voitures.value.filter(v => v.id_voiture !== id)
 }
 </script>

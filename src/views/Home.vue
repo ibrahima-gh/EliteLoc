@@ -6,9 +6,10 @@
         <h2 class="text-2xl font-bold">Vehicules en tendances</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 mb-10">
           <vehicles
-            v-for="vehicle in filteredVehicles" 
+            v-for="vehicle in filteredVehicles"
+            :id="vehicle.id_voiture"
             :key="vehicle.id_voiture" 
-            :image="vehicle.image" 
+            :image="vehicle.url_img" 
             :title="vehicle.marque" 
             :model="vehicle.modele"
             :primaryColor="''"
@@ -95,7 +96,7 @@ const filteredVehicles = ref([])
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:3000/api/voitures/tendance')
+    const response = await axios.get('http://localhost:3000/cars/tendance')
     vehicles.value = response.data
     filteredVehicles.value = response.data
   } catch (error) {

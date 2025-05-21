@@ -39,15 +39,11 @@ return `${day}:${month}:${year}`;
 }
 
 onMounted(async () => {
-const token = localStorage.getItem('token')
-if (!token) return
+const userId = localStorage.getItem('user_id')
+if (!userId) return
 
 try {
-  const res = await axios.get(`http://localhost:3000/api/locations/mes-locations`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  })
+  const res = await axios.get(`http://localhost:3000/my-rents?userId=${userId}`)
   locations.value = res.data
 } catch (error) {
   console.error("Erreur lors de la récupération des réservations :", error)

@@ -9,7 +9,6 @@
       <li><span class="font-semibold text-white">Prénom :</span> {{ user.prenom }}</li>
       <li><span class="font-semibold text-white">Email :</span> {{ user.email }}</li>
       <li><span class="font-semibold text-white">Téléphone :</span> {{ user.telephone }}</li>
-      <li><span class="font-semibold text-white">Adresse :</span> {{ user.adresse }}</li>
     </ul>
   </div>
 </template>
@@ -18,31 +17,25 @@
 import { ref, onMounted } from 'vue';
 import axiosInstance from '@/utils/axiosInstance';
 
-// Variables réactives
 const user = ref({});
 const loading = ref(true);
 const error = ref(null);
 
-// récupérer les données utilisateur au montage du composant
 const fetchUserData = async () => {
   loading.value = true;
   error.value = null;
 
   try {
-    const token = localStorage.getItem('token'); // Récupération du token depuis le localStorage
-    if (!token) {
+    const user_id = localStorage.getItem('user_id');
+    if (!user_id) {
       error.value = "Vous devez être connecté.";
+      loading.value = false;
       return;
     }
 
-    // Requête API avec le token
-    const { data } = await axiosInstance.get('/utilisateurs/me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data } = await axiosInstance.get('/users/me');
 
-    user.value = data;
+    user.value = data.user;
   } catch (err) {
     console.error("Erreur lors de la récupération des données utilisateur :", err);
     error.value = "Impossible de charger vos informations.";
@@ -51,5 +44,5 @@ const fetchUserData = async () => {
   }
 };
 
-onMounted(fetchUserData); // Appeler la fonction lors du montage du composant
+onMounted(fetchUserData);
 </script>

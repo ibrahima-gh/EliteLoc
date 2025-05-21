@@ -60,14 +60,8 @@ const router = useRouter();
 
 const handleLogout = async () => {
   try {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
-    await fetch('http://localhost:3000/utilisateurs/deconnexion', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    await fetch('http://localhost:3000/login', {
+      method: 'POST'
     });
 
     logout();
