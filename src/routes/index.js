@@ -12,6 +12,7 @@ import Profile from '../views/account/Profile.vue'
 import Infos from '../views/account/Infos.vue'
 
 const routes = [
+  { path: "/:pathMatch(.*)*", redirect: "/" },
   { path: '/', component: Home },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
