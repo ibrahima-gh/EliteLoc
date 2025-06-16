@@ -17,63 +17,16 @@
             </svg>
           </button>
         </div>
-        <div class="text-center mb-8">
-          <button class="bg-neutral-900 hover:bg-neutral-800 px-6 py-3 rounded-full font-bold shadow-md flex items-center gap-2 mx-auto transition" @click="toggleFilters">
-            Filtres
-            <span :class="showFilters ? 'rotate-180' : ''" class="transition-transform">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </span>
-          </button>
-          <transition name="fade">
-            <div v-if="showFilters" class="bg-neutral-900 rounded-xl p-6 mt-4 shadow-lg grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div>
-                <h3 class="text-[#d4af7f] text-lg font-semibold mb-3">Marque</h3>
-                <div class="flex flex-wrap gap-2">
-                  <label v-for="brand in brands" :key="brand" class="flex items-center gap-2 bg-neutral-800 px-4 py-2 rounded-full cursor-pointer hover:bg-neutral-700 transition">
-                    <input type="checkbox" :value="brand" class="hidden" />
-                    <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-[#d4af7f]"></span>
-                    {{ brand }}
-                  </label>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-[#d4af7f] text-lg font-semibold mb-3">Prix</h3>
-                <div class="flex flex-col gap-3">
-                  <input type="range" min="0" max="500" step="10" v-model="priceRange" class="w-full h-2 rounded bg-neutral-800 appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#d4af7f]" />
-                  <span class="text-center font-bold text-[#d4af7f]">{{ priceRange }}€/jour</span>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-[#d4af7f] text-lg font-semibold mb-3">Type</h3>
-                <div class="flex flex-wrap gap-2">
-                  <label v-for="type in vehicleTypes" :key="type" class="flex items-center gap-2 bg-neutral-800 px-4 py-2 rounded-full cursor-pointer hover:bg-neutral-700 transition">
-                    <input type="checkbox" :value="type" class="hidden" />
-                    <span class="w-4 h-4 border-2 border-neutral-600 rounded-sm bg-transparent transition-all hover:bg-[#d4af7f]"></span>
-                    {{ type }}
-                  </label>
-                </div>
-              </div>
-            </div>
-          </transition>
-        </div>
         <div class="flex justify-between items-center mb-6">
-          <p class="text-sm text-neutral-400"> Nous possédons {{ filteredVehicles.length }} véhicules</p>
-          <div class="flex gap-10">
+          <p class="text-xs text-neutral-400"> Nous possédons {{ filteredVehicles.length }} véhicules</p>
+          <div class="flex gap-10 text-xs md:text-base">
             <div class="flex items-center gap-2">
-              <span class="size-4 rounded-full bg-[#046C4E] z-50"></span><p>: disponible</p>
+              <span class="size-2 md:size-4 rounded-full bg-[#046C4E] z-50"></span><p>: disponible</p>
             </div>
             <div class="flex items-center gap-2">
-              <span class="size-4 rounded-full bg-[#7B1E22] z-50"></span><p>: non disponible</p>
+              <span class="size-2 md:size-4 rounded-full bg-[#7B1E22] z-50"></span><p>: reservé</p>
             </div>
           </div>
-          <select class="bg-neutral-900 text-white border-none px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D4AF7F]">
-            <option>Trier par: Pertinence</option>
-            <option>Prix croissant</option>
-            <option>Prix décroissant</option>
-            <option>Année récente</option>
-          </select>
         </div>
       </section>
 
@@ -97,25 +50,18 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import axios from 'axios'
+
+import axiosInstance from '@/utils/axiosInstance';
 
 import Vehicles from '../components/Vehicles.vue'
 const vehicles = ref([])
 const filteredVehicles = ref([])
-const showFilters = ref(false)
-const priceRange = ref(200)
-
-const brands = ['Peugeot', 'BMW', 'Audi', 'Mercedes', 'Renault', 'Volkswagen']
-const vehicleTypes = ['Berline', 'SUV', 'Citadine', 'Sportive', 'Break']
 const searchQuery = ref('');
 
-const toggleFilters = () => {
-  showFilters.value = !showFilters.value
-}
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:3000/cars')
+    const response = await axiosInstance.get('/cars')
     vehicles.value = response.data
     filteredVehicles.value = response.data
   } catch (error) {
@@ -130,15 +76,3 @@ watch(searchQuery, (newValue) => {
   );
 });
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

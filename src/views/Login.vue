@@ -6,7 +6,7 @@
       class="absolute inset-0 w-full h-full object-cover opacity-30 z-0"
     />
     <div class="relative z-10 bg-[#1f1f1f] bg-opacity-80 p-10 rounded-4xl w-full max-w-md">
-      <h1 class="text-3xl font-bold text-center text-white my-15">Connexion</h1>
+      <h1 class="text-3xl font-bold text-center text-white mb-15">Connexion</h1>
       <form @submit.prevent="handleLogin" class="space-y-6">
         <div>
           <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Adresse e-mail</label>

@@ -17,26 +17,30 @@
       </button>
     </slot>
   </div>
-  <div v-if="showPopup" class="fixed z-100 top-0 left-0 w-full h-full bg-black/90 flex justify-center items-center" @click.self="closePopup">
-      <div class="flex relative justify-between w-1/2 bg-black rounded-[50px] border-[#262629] border-8 overflow-hidden">
+  <div v-if="showPopup" class="fixed z-100 top-0 left-0 w-full h-full bg-black/90 flex flex-col gap-4 justify-center items-center" @click.self="closePopup">
+      <div class="flex relative justify-between w-full md:w-1/2 bg-black rounded-[50px] border-[#262629] border-8 overflow-hidden">
         <img class="w-full max-w-full max-h-full " :src="image" :alt="title">
-        <div class="absolute bottom-0 bg-gradient-to-t from-black via-black to-transparent h-50 w-full"></div>
-        <div class="flex absolute bottom-0 w-full justify-between items-center p-8">
-          <div class="">
-            <h3 class="text-2xl font-bold">{{ title }}</h3>
-            <p class="text-sm text-gray-600">{{ model }}</p>
-          </div>
-          <div class="">
-            <label for="startDate" class="block text-sm font-semibold">Date de début:</label>
-            <input type="date" id="startDate" :min="today" v-model="startDate" class="mt-2 p-2 border border-gray-300 rounded-lg w-full text-white" />
-
-            <label for="endDate" class="block text-sm font-semibold mt-4">Date de fin:</label>
-            <input type="date" id="endDate" :min="startDate" v-model="endDate" class="mt-2 p-2 border border-gray-300 rounded-lg w-full" />
-          </div>
-          <button @click="createLocation" class="bg-[#a88b5c] hover:bg-[#046C4E] h-15 text-white rounded-3xl py-2 px-4 transition cursor-pointer flex items-center"><img class="h-4 invert" src="/car_rent.png" alt=""></button>
+        <div class="absolute bottom-0 bg-gradient-to-t from-black  to-transparent h-50 w-full"></div>
+        <div class="flex absolute flex-col left-6 top-6 ">
+          <h3 class="text-2xl font-bold text-[#a88b5c]">{{ title }}</h3>
+          <p class="text-sm text-gray-600">{{ model }}</p>
         </div>
-        <button @click="closePopup" class="bg-[#7B1E22] absolute right-8 top-8 text-white rounded-lg py-2 px-4 hover:bg-[#a88b5c] transition cursor-pointer">X</button>
+        <div class="flex absolute bottom-0 w-full justify-between items-end p-6">
+          <div class="flex items-center gap-6 md:gap-2">
+            <div>
+              <label for="startDate" class=" text-sm font-semibold">De:</label>
+              <input type="date" id="startDate" :min="today" v-model="startDate" class="mt-2 p-2 border border-gray-300 rounded-lg w-full text-white" />
+            </div>
+            <div>
+              <label for="endDate" class="text-sm font-semibold">À:</label>
+              <input type="date" id="endDate" :min="startDate" v-model="endDate" class="mt-2 p-2 border border-gray-300 rounded-lg w-full" />
+            </div>
+          </div>
+          <button @click="createLocation" class="bg-[#a88b5c] hover:bg-[#046C4E] h-15 text-white rounded-3xl py-2 px-4 transition cursor-pointer hidden md:flex items-center"><img class="h-4 invert" src="/car_rent.png" alt=""></button>
+        </div>
+        <button @click="closePopup" class="bg-[#7B1E22] absolute right-6 top-6 text-white rounded-2xl py-2 px-4 hover:bg-[#a88b5c] transition cursor-pointer">X</button>
       </div>
+      <button @click="createLocation" class="bg-[#a88b5c] hover:bg-[#046C4E] h-15 text-white rounded-3xl py-2 px-4 transition cursor-pointer flex sm:hidden gap-2 items-center">Louer <img class="h-4 invert" src="/car_rent.png" alt=""></button>
     </div>
 </template>
 
@@ -71,7 +75,7 @@ const createLocation = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/locations', {
+    const response = await fetch('http://192.168.1.81:3000/locations', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -1,36 +1,45 @@
 <template>
-  <div class="absolute top-10 left-10 right-10 flex justify-between items-center z-20">
+  <div class="absolute top-5 w-full px-5 flex justify-between items-center z-20">
     <RouterLink 
       to="/" 
       class="text-5xl font-bold text-white transition-all duration-500 hover:scale-105"
     >
       <img 
-        class="h-12 rounded-full border-2 border-[#C8AD7F] p-1 object-cover shadow-lg hover:shadow-[#C8AD7F]/50 transition-all duration-300 hover:rotate-[5deg]" 
+        class="w-10 md:w-20" 
         src="/logo.jpg" 
         alt="Logo Luxury Cars"
       >
     </RouterLink>
-    <nav class="flex gap-6 items-center">
+    <nav class="flex sm:gap-6 items-center">
       <RouterLink 
         to="/vehicles" 
-        class="text-white font-bold text-lg px-5 py-2 hover:text-[#C8AD7F] transition-all duration-300 relative group"
+        class="text-white font-bold md:text-lg px-5 py-2 hover:text-[#C8AD7F] transition-all duration-300 relative group"
       >
         Véhicules
-        <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-[#C8AD7F] transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
       </RouterLink>
       
       <RouterLink 
         v-if="!isAuthenticated" 
         to="/register" 
-        class="text-white font-bold text-lg px-5 py-2 rounded-full bg-[#C8AD7F] hover:bg-[#C8AD7F]/90 hover:shadow-lg hover:shadow-[#C8AD7F]/30 transition-all duration-300 transform hover:-translate-y-1"
+        class="text-white hidden sm:block font-bold md:text-lg px-5 py-2 rounded-full bg-[#C8AD7F] hover:bg-[#C8AD7F]/90 hover:shadow-lg hover:shadow-[#C8AD7F]/30 transition-all duration-300 transform hover:-translate-y-1"
       >
         S'identifier
+      </RouterLink>
+      <RouterLink 
+        v-if="!isAuthenticated" 
+        to="/register" 
+        class="text-white block sm:hidden font-bold md:text-lg px-5 py-2 rounded-full bg-[#C8AD7F] hover:bg-[#C8AD7F]/90 hover:shadow-lg hover:shadow-[#C8AD7F]/30 transition-all duration-300 transform hover:-translate-y-1"
+      >
+                <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 20c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+        </svg>
       </RouterLink>
       
       <div v-if="isAuthenticated" class="flex gap-6 items-center">
         <RouterLink 
           to="/account" 
-          class="text-[#C8AD7F] hover:text-white font-bold text-lg px-5 py-2 hover:bg-[#C8AD7F90] rounded-full hover:opacity-90 transition-all duration-400 relative overflow-hidden group"
+          class="text-[#C8AD7F] hover:text-white font-bold text-xs md:text-lg px-5 py-2 hover:bg-[#C8AD7F90] rounded-full hover:opacity-90 transition-all duration-400 relative overflow-hidden group"
         >
           <span class="relative z-10">Mon Compte</span>
           <span class="absolute inset-0 bg-[#C8AD7F] rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300 origin-center"></span>
@@ -93,23 +102,3 @@ const handleLogout = async () => {
   }
 };
 </script>
-
-<style>
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fade-out {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-20px); }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out forwards;
-}
-
-.animate-fade-out {
-  animation: fade-out 0.3s ease-out forwards;
-}
-</style>
